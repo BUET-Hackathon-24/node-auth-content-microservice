@@ -39,7 +39,7 @@ class VlogModel extends Base {
   async deleteVlog(id: number) {
     try {
       return await this.query(
-        "DELETE FROM vlog WHERE id = $1 RETURNING *",
+        "DELETE FROM \"Vlog\" WHERE id = $1 RETURNING *",
         [id]
       );
     } catch (error) {
@@ -49,7 +49,7 @@ class VlogModel extends Base {
   }
   async getUserVlogs(userId : number){
     try {
-      return this.query("SELECT * FROM vlog WHERE uploader_id = $1", [userId]);
+      return this.query("SELECT * FROM \"Vlog\" WHERE uploader_id = $1", [userId]);
     } catch (error) {
       console.error("Database error in getUserVlogs:", error);
       throw new Error("Failed to retrieve user vlogs");
