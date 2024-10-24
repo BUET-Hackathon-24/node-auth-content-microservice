@@ -37,6 +37,14 @@ class BlogService {
       throw error;
     }
   }
+  async getUserBlogs(userId : number){
+    try {
+      return await this.blogModel.getUserBlogs(userId);
+    } catch (error) {
+      console.error(`Error getting user blogs with id ${userId}:`, error);
+      throw error;
+    }
+  }
 }
 
 export default BlogService;

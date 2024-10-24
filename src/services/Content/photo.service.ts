@@ -38,6 +38,14 @@ class PhotoService {
       throw error;
     }
   }
+  async getPostPhotos(postId : number){
+    try {
+      return await this.photoModel.getPostPhotos(postId);
+    } catch (error) {
+      console.error(`Error getting post photos with id ${postId}:`, error);
+      throw error;
+    }
+  }
 }
 
 export default PhotoService;

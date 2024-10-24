@@ -38,6 +38,14 @@ class PlanService {
       throw error;
     }
   }
+  async getUserPlans(userId : number){
+    try {
+      return await this.planModel.getUserPlans(userId);
+    } catch (error) {
+      console.error(`Error getting user plans with id ${userId}:`, error);
+      throw error;
+    }
+  }
 }
 
 export default PlanService;

@@ -46,7 +46,8 @@ class UserService {
       //console.log(user);
       return user;
     } catch (error) {
-      throw new Error("Failed to create user");
+      console.log(error);
+      throw error;
     }
   }
   async getUserById(id: number) {
@@ -151,6 +152,9 @@ class UserService {
     const hashedNewPassword = await HashService.hashPassword(newPassword);
     await this.userModel.updatePassword(id, hashedNewPassword);
     return { message: "Password updated successfully" };
+  }
+  async updateUserBio(id: number, bio: string) {
+    await this.userModel.updateUserBio(id, bio);
   }
 }
 

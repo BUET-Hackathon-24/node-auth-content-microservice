@@ -47,6 +47,14 @@ class VlogModel extends Base {
       throw new Error("Failed to delete vlog");
     }
   }
+  async getUserVlogs(userId : number){
+    try {
+      return this.query("SELECT * FROM vlog WHERE uploader_id = $1", [userId]);
+    } catch (error) {
+      console.error("Database error in getUserVlogs:", error);
+      throw new Error("Failed to retrieve user vlogs");
+    }
+  }
 }
 
 export default VlogModel;

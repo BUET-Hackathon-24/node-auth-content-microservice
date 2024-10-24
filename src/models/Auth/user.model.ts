@@ -12,6 +12,12 @@ class User extends Base {
     password: string,
   ) {
     try {
+      if(await this.checkUserExistsUsingMail(email)){
+        throw new Error("User already exists");
+      }
+      if(await this.checkUserExistsUsingPhoneNumber(phone_number)){
+        throw new Error("Phone number already exists");
+      }
       const sql = `WITH check_unique AS (SELECT COUNT(*) AS count FROM users WHERE email = $2 OR phone_number = $4)
         INSERT INTO users (name, email, password, phone_number)
         SELECT $1, $2, $3, $4
@@ -21,6 +27,7 @@ class User extends Base {
       const user = await this.query(sql, [name, email, password, phone_number]);
       return user[0];
     } catch (error) {
+      console.log(error);
       throw new Error("Failed to create user in model");
     }
   }
@@ -96,6 +103,15 @@ class User extends Base {
   async updatePassword(id: number, password: string) {
     const sql = "UPDATE users SET password = $1 WHERE id = $2";
     await this.query(sql, [password, id]);
+  }
+  async updateUserBio(id: number, bio: string) {
+    const sql = "UPDATE users SET bio = $1 WHERE id = $2";
+    await this.query(sql, [bio, id]);
+  }
+  async checkUserExistsUsingPhoneNumber(phone_number: string) {
+    const sql = "SELECT * FROM users WHERE phone_number = $1";
+    const user = await this.query(sql, [phone_number]);
+    return user.length > 0;
   }
 }
 

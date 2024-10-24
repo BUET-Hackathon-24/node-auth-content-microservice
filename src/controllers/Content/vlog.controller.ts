@@ -52,6 +52,15 @@ class VlogController {
             res.status(500).json({ error: "Failed to delete vlog" });
         }
     }
+    getUserVlogs = async (req: Request, res: Response) => {
+        const { id } = req.body;
+        try{
+        const vlogs = await this.vlogModel.getUserVlogs(id);
+        res.status(201).json(vlogs);
+        }catch(error){
+            res.status(500).json({ message: "Internal server error" });
+        }
+    }   
 }
 
 export default VlogController;

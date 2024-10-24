@@ -30,26 +30,22 @@ class UserController {
       console.log(accessToken);
       res.status(201).json({
         message: "User created successfully",
-        accessToken,
-        refreshToken,
+        access_token: accessToken,
+        refresh_token: refreshToken,
       });
       return;
     } catch (error) {
-      if (error instanceof Error) {
         res
           .status(500)
-          .json({ message: "Failed to create user", error: error.message });
-      } else {
-        res.status(500).json({
-          message: "Failed to create user",
-          error: "An unknown error occurred",
-        });
-      }
+          .json({ message: (error as Error).message, error: (error as Error).message });
       return;
     }
   };
   getUserById = async (req: Request, res: Response): Promise<void> => {
-    const { id } = req.params;
+    let id = req.params.id;
+    if(!id){
+      id = req.body.userId;
+    }
     if (!id) {
       res.status(400).json({ message: "Id is required" });
       return;
@@ -160,8 +156,8 @@ class UserController {
       const accessToken: string = await AuthenticationService.generateAccessToken(user, refreshToken);
       res.status(200).json({
         message: "User logged in successfully",
-        accessToken,
-        refreshToken,
+        access_token: accessToken,
+        refresh_token: refreshToken,
       });
       return;
     } catch (error) {
@@ -187,8 +183,8 @@ class UserController {
       return;
     }
     try {
-      const accessToken = await this.userService.refresh(refreshToken);
-      res.status(200).json({ message: "Token refreshed successfully", accessToken });
+      const accessToken: string = await this.userService.refresh(refreshToken);
+      res.status(200).json({ message: "Token refreshed successfully", access_token: accessToken });
       return;
     } catch (error) {
       res.status(500).json({ message: "Failed to refresh", error: error });
@@ -233,6 +229,12 @@ class UserController {
       return;
     }
   }
+  updateUserBio = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params;
+    const { bio } = req.body;
+    await this.userService.updateUserBio(parseInt(id), bio);
+  }
 }
+
 
 export default UserController;

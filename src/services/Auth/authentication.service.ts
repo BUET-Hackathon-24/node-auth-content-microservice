@@ -11,11 +11,11 @@ class AuthenticationService {
       throw new Error("Invalid refresh token");
     }
     const accessToken = sign(payload, process.env.ACCESS_TOKEN_SECRET as string, {
-      expiresIn: "15m",
+      expiresIn: "7d",
     });
     return accessToken;
   }
-  async verifyAccessToken(token: string) {
+  async verify(token: string) {
     return verify(token, process.env.ACCESS_TOKEN_SECRET as string);
   }
   async generateRefreshToken(payload: any) {

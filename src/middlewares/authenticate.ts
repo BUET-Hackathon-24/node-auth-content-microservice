@@ -8,10 +8,17 @@ class AuthenticationMiddleware {
       res.status(401).json({ message: "Unauthorized" });
       return;
     }
-    const decoded = jwt.verify(
-      token,
+    let decoded;
+    try{
+      decoded = jwt.verify(
+        token,
       process.env.ACCESS_TOKEN_SECRET as string,
-    );
+      );
+    } catch (error) {
+      console.log(error);
+      res.status(401).json({ message: "Unauthorized", error: (error as Error).message });
+      return;
+    }
     if(typeof decoded === 'object' && 'id' in decoded){
       req.body.userId = decoded.id;
     }

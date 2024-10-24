@@ -1,7 +1,7 @@
 import Base from "../base.model";
 
 class PhotoModel extends Base {
-    tableFields = ["id", "uploader_id", "name", "url", "created_at"];
+    tableFields = ["id", "post_id", "name", "url", "created_at"];
 
     async getPhoto(id: number) {
         try {
@@ -12,11 +12,11 @@ class PhotoModel extends Base {
         }
     }
 
-    async createPhoto(uploaderId: number, name: string, url: string) {
+    async createPhoto(postId: number, name: string, url: string) {
         try {
             return await this.query(
-                "INSERT INTO photo (uploader_id, name, url) VALUES ($1, $2, $3) RETURNING *",
-                [uploaderId, name, url]
+                "INSERT INTO photo (post_id, name, url) VALUES ($1, $2, $3) RETURNING *",
+                [postId, name, url]
             );
         } catch (error) {
             console.error("Database error in createPhoto:", error);
@@ -45,6 +45,14 @@ class PhotoModel extends Base {
         } catch (error) {
             console.error("Database error in deletePhoto:", error);
             throw new Error("Failed to delete photo");
+        }
+    }
+    async getPostPhotos(postId : number){
+        try {
+            return this.query("SELECT * FROM photo WHERE post_id = $1", [postId]);
+        } catch (error) {
+            console.error("Database error in getPostPhotos:", error);
+            throw new Error("Failed to retrieve post photos");
         }
     }
 }

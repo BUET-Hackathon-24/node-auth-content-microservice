@@ -18,4 +18,7 @@ router.put('/:id', authenticationMiddleware.authenticateUser, (req, res) => vlog
 // Delete a vlog
 router.delete('/:id', authenticationMiddleware.authenticateUser, (req, res) => vlogController.deleteVlog(req, res));
 
+// Get all vlogs for a user
+router.get('/', authenticationMiddleware.authenticateUser, (req, res) => vlogController.getUserVlogs(req, res));
+
 export default router;

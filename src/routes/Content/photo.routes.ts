@@ -11,5 +11,6 @@ photoRoutes.get("/:id", authenticationMiddleware.authenticateUser, photoControll
 photoRoutes.post("/", authenticationMiddleware.authenticateUser, photoController.createPhoto);
 photoRoutes.put("/:id", authenticationMiddleware.authenticateUser, photoController.updatePhoto);
 photoRoutes.delete("/:id", authenticationMiddleware.authenticateUser, photoController.deletePhoto);
+photoRoutes.get("/", authenticationMiddleware.authenticateUser, photoController.getPostPhotos);
 
 export default photoRoutes;

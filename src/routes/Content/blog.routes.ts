@@ -11,5 +11,6 @@ blogRoutes.get("/:id",authenticationMiddleware.authenticateUser, blogController.
 blogRoutes.post("/", authenticationMiddleware.authenticateUser, blogController.createBlog);
 blogRoutes.put("/:id", authenticationMiddleware.authenticateUser, blogController.updateBlog);
 blogRoutes.delete("/:id", authenticationMiddleware.authenticateUser, blogController.deleteBlog);
+blogRoutes.get("/", authenticationMiddleware.authenticateUser, blogController.getUserBlogs);
 
 export default blogRoutes;

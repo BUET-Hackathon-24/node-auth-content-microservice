@@ -31,7 +31,7 @@ class SupabaseAuthService {
     } else {
       const refreshToken = await AuthenticationService.generateRefreshToken(userData);
       const accessToken = await AuthenticationService.generateAccessToken(userData,refreshToken);
-      return {refreshToken,accessToken};
+      return {refresh_token:refreshToken,access_token:accessToken};
     } 
   };
 }

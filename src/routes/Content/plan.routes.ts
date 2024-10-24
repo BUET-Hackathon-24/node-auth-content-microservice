@@ -11,6 +11,7 @@ planRoutes.get("/:id", authenticationMiddleware.authenticateUser, planController
 planRoutes.post("/", authenticationMiddleware.authenticateUser, planController.createPlan);
 planRoutes.put("/:id", authenticationMiddleware.authenticateUser, planController.updatePlan);
 planRoutes.delete("/:id", authenticationMiddleware.authenticateUser, planController.deletePlan);
+planRoutes.get("/", authenticationMiddleware.authenticateUser, planController.getUserPlans);
 
 export default planRoutes;
 

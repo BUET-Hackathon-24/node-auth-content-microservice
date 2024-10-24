@@ -47,6 +47,14 @@ class PlanModel extends Base {
       throw new Error("Failed to delete plan");
     }
   }
+  async getUserPlans(userId : number){
+    try {
+      return this.query("SELECT * FROM plans WHERE created_by = $1", [userId]);
+    } catch (error) {
+      console.error("Database error in getUserPlans:", error);
+      throw new Error("Failed to retrieve user plans");
+    }
+  }
 }
 
 export default PlanModel;

@@ -38,6 +38,14 @@ class VlogService {
       throw error;
     }
   }
+  async getUserVlogs(userId : number){
+    try {
+      return await this.vlogModel.getUserVlogs(userId);
+    } catch (error) {
+      console.error(`Error getting user vlogs with id ${userId}:`, error);
+      throw error;
+    }
+  }
 }
 
 export default VlogService;

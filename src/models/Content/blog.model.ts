@@ -47,6 +47,14 @@ class BlogModel extends Base {
       throw new Error("Failed to delete blog");
     }
   }
+  getUserBlogs(userId : number){
+    try {
+      return this.query("SELECT * FROM blogs WHERE poster_id = $1", [userId]);
+    } catch (error) {
+      console.error("Database error in getUserBlogs:", error);
+      throw new Error("Failed to retrieve user blogs");
+    }
+  }
 }
 
 export default BlogModel;

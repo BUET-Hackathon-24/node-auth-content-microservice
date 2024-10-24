@@ -44,8 +44,16 @@ class PlanController {
             res.status(500).json({ message: "Internal server error" });
         }
     }
+    getUserPlans = async (req: Request, res: Response) => {
+        const { id } = req.body;
+        try{
+        const plans = await planService.getUserPlans(id);
+        res.status(201).json(plans);
+        }catch(error){
+            res.status(500).json({ message: "Internal server error" });
+        }
+    }
 }
 
 export default PlanController;
 
-    

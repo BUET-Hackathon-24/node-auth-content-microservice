@@ -40,6 +40,15 @@ class BlogController {
             res.status(500).json({ message: "Internal server error" });
         }
     }
+    getUserBlogs = async (req: Request, res: Response) => {
+        const { id } = req.body;
+        try{
+        const blogs = await blogService.getUserBlogs(id);
+        res.status(201).json(blogs);
+        }catch(error){
+            res.status(500).json({ message: "Internal server error" });
+        }
+    }
 }
 
 export default BlogController;
