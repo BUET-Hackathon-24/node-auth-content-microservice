@@ -5,7 +5,7 @@ const doc = {
     title: "AI Mentor API Documentation",
     description: "API documentation for AI Mentor",
   },
-  host: "192.168.0.218:3000", // Change to your host
+  host: "172.28.31.70:3000", // Change to your host
   schemes: ["http"], // Or 'https' if you're using HTTPS
 };
 

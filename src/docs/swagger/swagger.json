@@ -5,7 +5,7 @@
     "description": "API documentation for AI Mentor",
     "version": "1.0.0"
   },
-  "host": "192.168.0.218:3000",
+  "host": "172.28.31.70:3000",
   "basePath": "/",
   "schemes": [
     "http"
@@ -23,8 +23,7 @@
     },
     "/api/v1/users/": {
       "post": {
-        "tags": ["auth"],
-        "description": "Register a new user",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -66,8 +65,7 @@
     },
     "/api/v1/users/{id}": {
       "get": {
-        "tags": ["auth"],
-        "description": "Get user by ID",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -89,8 +87,7 @@
         }
       },
       "put": {
-        "tags": ["auth"],
-        "description": "Update user information",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -133,8 +130,7 @@
         }
       },
       "delete": {
-        "tags": ["auth"],
-        "description": "Delete user",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -155,8 +151,7 @@
     },
     "/api/v1/users/email/{email}": {
       "get": {
-        "tags": ["auth"],
-        "description": "Get user by email",
+        "description": "",
         "parameters": [
           {
             "name": "email",
@@ -180,8 +175,7 @@
     },
     "/api/v1/users/login": {
       "post": {
-        "tags": ["auth"],
-        "description": "User login",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -214,8 +208,7 @@
     },
     "/api/v1/users/logout/{id}": {
       "post": {
-        "tags": ["auth"],
-        "description": "User logout",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -236,8 +229,7 @@
     },
     "/api/v1/users/refresh": {
       "post": {
-        "tags": ["auth"],
-        "description": "Refresh user token",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -267,8 +259,7 @@
     },
     "/api/v1/users/send-otp": {
       "post": {
-        "tags": ["auth"],
-        "description": "Send OTP for password reset",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -295,8 +286,7 @@
     },
     "/api/v1/users/verify-otp": {
       "post": {
-        "tags": ["auth"],
-        "description": "Verify OTP for password reset",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -329,8 +319,7 @@
     },
     "/api/v1/users/forgot-password": {
       "patch": {
-        "tags": ["auth"],
-        "description": "Reset forgotten password",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -363,8 +352,7 @@
     },
     "/api/v1/auth/exchange-token": {
       "post": {
-        "tags": ["auth"],
-        "description": "Exchange tokens",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -397,8 +385,7 @@
     },
     "/api/v1/auth/google": {
       "get": {
-        "tags": ["auth"],
-        "description": "Google OAuth authentication",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -411,8 +398,7 @@
     },
     "/api/v1/auth/github": {
       "get": {
-        "tags": ["auth"],
-        "description": "GitHub OAuth authentication",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
