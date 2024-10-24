@@ -9,4 +9,5 @@ const authenticationMiddleware = new AuthenticationMiddleware();
 
 postRoutes.post("/", authenticationMiddleware.authenticateUser, postController.createPost);
 postRoutes.get("/", authenticationMiddleware.authenticateUser, postController.getPostsOfUser);
+
 export default postRoutes;

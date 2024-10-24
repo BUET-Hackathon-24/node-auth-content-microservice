@@ -64,6 +64,12 @@ class PhotoController {
             res.status(500).json({ message: "Internal server error" });
         }
     }
+    getPostPhotosBySearchString = async (req: Request, res: Response) => {
+        const { search_string } = req.params;
+        const { userId } = req.body;
+        const photos = await photoService.getPostPhotosBySearchString(search_string, userId);
+        res.status(200).json(photos);
+    }
 }
 
 export default PhotoController;

@@ -105,8 +105,9 @@ class User extends Base {
     await this.query(sql, [password, id]);
   }
   async updateUserBio(id: number, bio: string) {
+    console.log("id, bio in model: ", id, bio);
     const sql = "UPDATE users SET bio = $1 WHERE id = $2";
-    await this.query(sql, [bio, id]);
+    return await this.query(sql, [bio, id]);
   }
   async checkUserExistsUsingPhoneNumber(phone_number: string) {
     const sql = "SELECT * FROM users WHERE phone_number = $1";

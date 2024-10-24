@@ -12,6 +12,7 @@ photoRoutes.post("/", authenticationMiddleware.authenticateUser, photoController
 photoRoutes.put("/:id", authenticationMiddleware.authenticateUser, photoController.updatePhoto);
 photoRoutes.delete("/:id", authenticationMiddleware.authenticateUser, photoController.deletePhoto);
 photoRoutes.get("/", authenticationMiddleware.authenticateUser, photoController.getPostPhotos);
+photoRoutes.get("/search/:search_string", authenticationMiddleware.authenticateUser, photoController.getPostPhotosBySearchString);
 photoRoutes.patch("/ai-info", authenticationMiddleware.authenticateAIMicroservice, photoController.updateAiInfo);
 
 export default photoRoutes;

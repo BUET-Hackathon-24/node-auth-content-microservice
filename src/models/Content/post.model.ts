@@ -6,14 +6,14 @@ class PostModel extends BaseModel {
         try {
             const sql = `
                 WITH new_post AS (
-                    INSERT INTO post (caption, location, user_id,description)
-                    VALUES ($1, $2, $3,$4)
+                    INSERT INTO post (caption, location, user_id)
+                    VALUES ($1, $2, $3)
                     RETURNING id
                 )
-                INSERT INTO "Photo" (post_id, name, url)
+                INSERT INTO "Photo" (post_id, name, url,description)
                 SELECT new_post.id, unnest($4::text[]), unnest($5::text[]), unnest($6::text[])
                 FROM new_post
-                RETURNING (SELECT new_post.id FROM new_post), name, url;
+                RETURNING (SELECT new_post.id FROM new_post), name, url,description;
             `;
             let result: any[] = [];
             if(files.length > 0){

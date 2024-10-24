@@ -230,9 +230,12 @@ class UserController {
     }
   }
   updateUserBio = async (req: Request, res: Response): Promise<void> => {
-    const { id } = req.params;
-    const { bio } = req.body;
-    await this.userService.updateUserBio(parseInt(id), bio);
+    const { userId, bio } = req.body;
+    console.log(userId, bio);
+    const result = await this.userService.updateUserBio(parseInt(userId), bio);
+    console.log(result);
+    res.status(200).json({ message: "User bio updated successfully" });
+    return;
   }
 }
 

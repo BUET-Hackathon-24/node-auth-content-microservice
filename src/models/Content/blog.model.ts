@@ -5,7 +5,7 @@ class BlogModel extends Base {
 
   async getBlog(id: number) {
     try {
-      return await this.query("SELECT * FROM blogs WHERE id = $1", [id]);
+      return await this.query("SELECT * FROM blog WHERE id = $1", [id]);
     } catch (error) {
       console.error("Database error in getBlog:", error);
       throw new Error("Failed to retrieve blog");
@@ -15,7 +15,7 @@ class BlogModel extends Base {
   async createBlog(posterId: number, title: string, body: string) {
     try {
       return await this.query(
-        "INSERT INTO blogs (created_by, title, body) VALUES ($1, $2, $3) RETURNING *",
+        "INSERT INTO blog (poster_id, title, body) VALUES ($1, $2, $3) RETURNING *",
         [posterId, title, body]
       );
     } catch (error) {
@@ -27,7 +27,7 @@ class BlogModel extends Base {
   async updateBlog(id: number, title: string, body: string) {
     try {
       return await this.query(
-        "UPDATE blogs SET title = $1, body = $2 WHERE id = $3 RETURNING *",
+        "UPDATE blog SET title = $1, body = $2 WHERE id = $3 RETURNING *",
         [title, body, id]
       );
     } catch (error) {
@@ -39,7 +39,7 @@ class BlogModel extends Base {
   async deleteBlog(id: number) {
     try {
       return await this.query(
-        "DELETE FROM blogs WHERE id = $1 RETURNING *",
+        "DELETE FROM blog WHERE id = $1 RETURNING *",
         [id]
       );
     } catch (error) {
@@ -49,10 +49,14 @@ class BlogModel extends Base {
   }
   getUserBlogs(userId : number){
     try {
-      return this.query("SELECT * FROM blogs WHERE poster_id = $1", [userId]);
+      console.log("userId in model: ", userId);
+      return this.query(
+        "SELECT * FROM blog JOIN users ON users.id = blog.poster_id WHERE blog.poster_id = $1",
+        [userId]
+      );
     } catch (error) {
-      console.error("Database error in getUserBlogs:", error);
-      throw new Error("Failed to retrieve user blogs");
+      console.error("Database error in getUserblog:", error);
+      throw new Error("Failed to retrieve user blog");
     }
   }
 }

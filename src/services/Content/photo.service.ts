@@ -1,8 +1,8 @@
 import PhotoModel from "../../models/Content/photo.model";
-
+import AiService from "../AI/ai.service";
 class PhotoService {
   private photoModel = new PhotoModel();
-
+  private aiService = new AiService();
   async getPhoto(id: number) {
     try {
       return await this.photoModel.getPhoto(id);
@@ -51,6 +51,24 @@ class PhotoService {
       return await this.photoModel.updateAiInfo(url, aiInfo);
     } catch (error) {
       console.error(`Error updating ai info with url ${url}:`, error);
+      throw error;
+    }
+  }
+  async getPostPhotosBySearchString(searchString: string, userId: number) {
+    try {
+      console.log(searchString, userId);
+      const fileUrls : { urls: string[] } = await this.aiService.fetchFileUrls({
+        text: searchString,
+        user_id: userId
+      });
+      if(fileUrls.urls.length === 0) {
+        return [];
+      }
+      console.log(fileUrls.urls);
+      const photos = await this.photoModel.getPostPhotosByFileUrls(fileUrls.urls, userId);
+      return photos;
+    } catch (error) {
+      console.error(`Error getting post photos by search string ${searchString}:`, error);
       throw error;
     }
   }

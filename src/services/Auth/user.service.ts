@@ -154,7 +154,7 @@ class UserService {
     return { message: "Password updated successfully" };
   }
   async updateUserBio(id: number, bio: string) {
-    await this.userModel.updateUserBio(id, bio);
+    return await this.userModel.updateUserBio(id, bio);
   }
 }
 
