@@ -2,18 +2,16 @@ import BaseModel from "../base.model";
 
 class PostModel extends BaseModel {
     tableFields = ["id", "caption", "location", "created_at","user_id"];
-    async createPost(caption: string, location: string, userId: number, files: any) {
+    async createPost(caption: string, location: string, userId: number, files: any,) {
         try {
-            console.log(files);
-            files = JSON.parse(files);
             const sql = `
                 WITH new_post AS (
-                    INSERT INTO post (caption, location, user_id)
-                    VALUES ($1, $2, $3)
+                    INSERT INTO post (caption, location, user_id,description)
+                    VALUES ($1, $2, $3,$4)
                     RETURNING id
                 )
                 INSERT INTO "Photo" (post_id, name, url)
-                SELECT new_post.id, unnest($4::text[]), unnest($5::text[])
+                SELECT new_post.id, unnest($4::text[]), unnest($5::text[]), unnest($6::text[])
                 FROM new_post
                 RETURNING (SELECT new_post.id FROM new_post), name, url;
             `;
@@ -21,7 +19,8 @@ class PostModel extends BaseModel {
             if(files.length > 0){
                 const fileNames = files.map((file: any) => file.name);
                 const fileUrls = files.map((file: any) => file.url);
-                result = await this.query(sql, [caption, location, userId, fileNames, fileUrls]);
+                const fileDescriptions = files.map((file: any) => file.description);
+                result = await this.query(sql, [caption, location, userId, fileNames, fileUrls, fileDescriptions]);
             }
             
             return {
@@ -37,12 +36,34 @@ class PostModel extends BaseModel {
         }
     }
     async getPostsOfUser(userId: number) {
-        const sql = `
-        SELECT * FROM post WHERE user_id = $1
-        LEFT JOIN "Photo" ON post.id = "Photo".post_id
-        `;
+        console.log("userId in getPostsOfUser: ", userId);
+        try {
+            const sql = `
+                SELECT 
+                    p.*,
+                    COALESCE(
+                        json_agg(
+                            json_build_object('id', ph.id, 'name', ph.name, 'url', ph.url)
+                        ) FILTER (WHERE ph.id IS NOT NULL),
+                        '[]'
+                    ) as photos
+                FROM post p
+                LEFT JOIN "Photo" ph ON p.id = ph.post_id
+                WHERE p.user_id = $1
+                GROUP BY p.id
+                ORDER BY p.created_at DESC;
+            `;
+            const result = await this.query(sql, [userId]);
+            return result;
+        } catch (error) {
+            console.error('Error getting posts of user:', error);
+            throw new Error('Failed to get posts of user');
+        }
+    }
+    async getPostByPosterId(userId: number) {
+        const sql = `SELECT id FROM post WHERE user_id = $1`;
         const result = await this.query(sql, [userId]);
-        return result;
+        return result[0].id;
     }
 }
 

@@ -55,6 +55,14 @@ class PhotoModel extends Base {
             throw new Error("Failed to retrieve post photos");
         }
     }
+    async updateAiInfo(url: string, aiInfo: string) {
+        try {
+            return await this.query("UPDATE photo SET ai_info = $1 WHERE url = $2 RETURNING *", [aiInfo, url]);
+        } catch (error) {
+            console.error("Database error in updateAiInfo:", error);
+            throw new Error("Failed to update ai info");
+        }
+    }
 }
 
 export default PhotoModel;

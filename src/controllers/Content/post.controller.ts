@@ -22,7 +22,8 @@ class PostController {
 
     getPostsOfUser = async (req: Request, res: Response) : Promise<void> => {
         try {
-            const { userId } = req.body.userId;
+            const userId = req.body.userId;
+            console.log("userId in getPostsOfUse in controller: ", userId);
             const posts = await this.postService.getPostsOfUser(parseInt(userId));
             res.status(200).json(posts);
         } catch (error) {

@@ -53,6 +53,17 @@ class PhotoController {
             res.status(500).json({ message: "Internal server error" });
         }
     }
+
+    updateAiInfo = async (req: Request, res: Response) => {
+        const { url } = req.body;
+        const { aiInfo } = req.body;
+        try{
+            const photo = await photoService.updateAiInfo(url, aiInfo);
+            res.status(200).json(photo);
+        }catch(error){
+            res.status(500).json({ message: "Internal server error" });
+        }
+    }
 }
 
 export default PhotoController;

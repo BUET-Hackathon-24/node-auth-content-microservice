@@ -46,6 +46,14 @@ class PhotoService {
       throw error;
     }
   }
+  async updateAiInfo(url: string, aiInfo: string) {
+    try {
+      return await this.photoModel.updateAiInfo(url, aiInfo);
+    } catch (error) {
+      console.error(`Error updating ai info with url ${url}:`, error);
+      throw error;
+    }
+  }
 }
 
 export default PhotoService;
