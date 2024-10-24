@@ -23,7 +23,8 @@
     },
     "/api/v1/users/": {
       "post": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Register a new user",
         "parameters": [
           {
             "name": "body",
@@ -41,6 +42,9 @@
                   "example": "any"
                 },
                 "password": {
+                  "example": "any"
+                },
+                "profile_picture": {
                   "example": "any"
                 }
               }
@@ -62,7 +66,8 @@
     },
     "/api/v1/users/{id}": {
       "get": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Get user by ID",
         "parameters": [
           {
             "name": "id",
@@ -84,7 +89,8 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Update user information",
         "parameters": [
           {
             "name": "id",
@@ -127,7 +133,8 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Delete user",
         "parameters": [
           {
             "name": "id",
@@ -148,7 +155,8 @@
     },
     "/api/v1/users/email/{email}": {
       "get": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Get user by email",
         "parameters": [
           {
             "name": "email",
@@ -172,7 +180,8 @@
     },
     "/api/v1/users/login": {
       "post": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "User login",
         "parameters": [
           {
             "name": "body",
@@ -205,7 +214,8 @@
     },
     "/api/v1/users/logout/{id}": {
       "post": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "User logout",
         "parameters": [
           {
             "name": "id",
@@ -226,7 +236,8 @@
     },
     "/api/v1/users/refresh": {
       "post": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Refresh user token",
         "parameters": [
           {
             "name": "body",
@@ -256,7 +267,8 @@
     },
     "/api/v1/users/send-otp": {
       "post": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Send OTP for password reset",
         "parameters": [
           {
             "name": "body",
@@ -283,7 +295,8 @@
     },
     "/api/v1/users/verify-otp": {
       "post": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Verify OTP for password reset",
         "parameters": [
           {
             "name": "body",
@@ -316,7 +329,8 @@
     },
     "/api/v1/users/forgot-password": {
       "patch": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Reset forgotten password",
         "parameters": [
           {
             "name": "body",
@@ -348,13 +362,24 @@
       }
     },
     "/api/v1/auth/exchange-token": {
-      "get": {
-        "description": "",
+      "post": {
+        "tags": ["auth"],
+        "description": "Exchange tokens",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access_token": {
+                  "example": "any"
+                },
+                "refresh_token": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -363,36 +388,37 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/api/v1/auth/google": {
       "get": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "Google OAuth authentication",
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/api/v1/auth/github": {
       "get": {
-        "description": "",
+        "tags": ["auth"],
+        "description": "GitHub OAuth authentication",
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/v1/auth/facebook": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
