@@ -6,14 +6,15 @@ import ApiCache from "../../middlewares/apicache";
 const router = Router();
 const followerController = new FollowerController();
 const authenticationMiddleware = new AuthenticationMiddleware();
+
+
 // Route to get followers
-router.get('/followers', authenticationMiddleware.authenticateUser, ApiCache.getCache("2 minutes"), (req, res) => followerController.getFollowers(req, res));
+router.get('/followers', authenticationMiddleware.authenticateUser, (req, res) => followerController.getFollowers(req, res));
 
 // Route to add a follower
 router.post('/followers/add', authenticationMiddleware.authenticateUser, (req, res) => followerController.addFollower(req, res));
 
 // Route to get following
-router.get('/following', authenticationMiddleware.authenticateUser, ApiCache.getCache("2 minutes"), (req, res) => followerController.getFollowing(req, res));
+router.get('/following', authenticationMiddleware.authenticateUser, (req, res) => followerController.getFollowing(req, res));
 
 export default router;
-

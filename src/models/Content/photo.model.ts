@@ -73,6 +73,7 @@ class PhotoModel extends Base {
         JOIN post ON "Photo".post_id = post.id
         WHERE url IN (${placeholders}) 
         AND post.user_id = $${fileUrls.length + 1}
+        ORDER BY "Photo".created_at DESC
       `;
       const result = await this.query(sql, [...fileUrls, userId]);
       return result;

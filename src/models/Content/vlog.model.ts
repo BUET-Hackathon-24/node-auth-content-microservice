@@ -5,7 +5,7 @@ class VlogModel extends Base {
 
   async getVlog(id: number) {
     try {
-      return await this.query("SELECT * FROM vlog WHERE id = $1", [id]);
+      return await this.query("SELECT * FROM \"Vlog\" WHERE id = $1", [id]);
     } catch (error) {
       console.error("Database error in getVlog:", error);
       throw new Error("Failed to retrieve vlog");
@@ -15,7 +15,7 @@ class VlogModel extends Base {
   async createVlog(uploaderId: number, name: string, url: string) {
     try {
       return await this.query(
-        "INSERT INTO vlog (uploader_id, name, url) VALUES ($1, $2, $3) RETURNING *",
+        "INSERT INTO \"Vlog\" (uploader_id, name, url) VALUES ($1, $2, $3) RETURNING *",
         [uploaderId, name, url]
       );
     } catch (error) {
@@ -27,7 +27,7 @@ class VlogModel extends Base {
   async updateVlog(id: number, name: string, url: string) {
     try {
       return await this.query(
-        "UPDATE vlog SET name = $1, url = $2 WHERE id = $3 RETURNING *",
+        "UPDATE \"Vlog\" SET name = $1, url = $2 WHERE id = $3 RETURNING *",
         [name, url, id]
       );
     } catch (error) {
@@ -49,7 +49,7 @@ class VlogModel extends Base {
   }
   async getUserVlogs(userId : number){
     try {
-      return this.query("SELECT * FROM \"Vlog\" WHERE uploader_id = $1", [userId]);
+      return this.query("SELECT * FROM \"Vlog\" WHERE uploader_id = $1 JOIN user ON \"Vlog\".uploader_id = user.id order by \"Vlog\".created_at desc", [userId]);
     } catch (error) {
       console.error("Database error in getUserVlogs:", error);
       throw new Error("Failed to retrieve user vlogs");

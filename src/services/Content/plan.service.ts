@@ -12,9 +12,9 @@ class PlanService {
     }
   }
 
-  async createPlan(userId: number, title: string, data: string) {
+  async createPlan(userId: number, title: string, data: string, start_date: Date, end_date: Date,latitude: string, longitude: string) {
     try {
-      return await this.planModel.createPlan(userId, title, data);
+      return await this.planModel.createPlan(userId, title, data, start_date, end_date,latitude, longitude);
     } catch (error) {
       console.error('Error creating plan:', error);
       throw error;

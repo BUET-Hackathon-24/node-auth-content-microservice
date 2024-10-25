@@ -53,9 +53,9 @@ class VlogController {
         }
     }
     getUserVlogs = async (req: Request, res: Response) => {
-        const { id } = req.body;
+        const { userId } = req.body;
         try{
-        const vlogs = await this.vlogModel.getUserVlogs(id);
+        const vlogs = await this.vlogModel.getUserVlogs(userId);
         res.status(201).json(vlogs);
         }catch(error){
             res.status(500).json({ message: "Internal server error" });

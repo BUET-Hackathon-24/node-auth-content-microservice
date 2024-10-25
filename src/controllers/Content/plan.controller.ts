@@ -15,9 +15,10 @@ class PlanController {
     }
 
     createPlan = async (req: Request, res: Response) => {
-        const { userId, title, data } = req.body;
+        const { userId, title, data, start_date, end_date,latitude, longitude } = req.body;
+        console.log(userId);
         try {
-            const plan = await planService.createPlan(userId, title, data);
+            const plan = await planService.createPlan(userId, title, data, start_date, end_date,latitude, longitude);
             res.status(201).json(plan);
         } catch (error) {
             res.status(500).json({ message: "Internal server error" });
@@ -45,9 +46,9 @@ class PlanController {
         }
     }
     getUserPlans = async (req: Request, res: Response) => {
-        const { id } = req.body;
+        const { userId } = req.body;
         try{
-        const plans = await planService.getUserPlans(id);
+        const plans = await planService.getUserPlans(userId);
         res.status(201).json(plans);
         }catch(error){
             res.status(500).json({ message: "Internal server error" });

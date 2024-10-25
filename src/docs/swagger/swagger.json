@@ -513,9 +513,6 @@
                 "userId": {
                   "example": "any"
                 },
-                "id": {
-                  "example": "any"
-                },
                 "title": {
                   "example": "any"
                 },
@@ -559,9 +556,6 @@
               "type": "object",
               "properties": {
                 "userId": {
-                  "example": "any"
-                },
-                "id": {
                   "example": "any"
                 }
               }
@@ -1021,6 +1015,12 @@
                 },
                 "data": {
                   "example": "any"
+                },
+                "start_date": {
+                  "example": "any"
+                },
+                "end_date": {
+                  "example": "any"
                 }
               }
             }
@@ -1307,25 +1307,21 @@
       }
     },
     "/api/v1/followers/followers": {
-      "post": {
+      "get": {
         "description": "",
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "example": "any"
-                }
-              }
-            }
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -1337,6 +1333,11 @@
       "post": {
         "description": "",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -1357,6 +1358,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -1364,25 +1368,21 @@
       }
     },
     "/api/v1/followers/following": {
-      "post": {
+      "get": {
         "description": "",
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "example": "any"
-                }
-              }
-            }
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -1395,15 +1395,20 @@
         "description": "",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "postId": {
+                "userId": {
                   "example": "any"
                 },
-                "userId": {
+                "postId": {
                   "example": "any"
                 }
               }
@@ -1411,8 +1416,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -1422,15 +1427,20 @@
         "description": "",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "blogId": {
+                "userId": {
                   "example": "any"
                 },
-                "userId": {
+                "blogId": {
                   "example": "any"
                 }
               }
@@ -1438,8 +1448,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -1449,15 +1459,20 @@
         "description": "",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "vlogId": {
+                "userId": {
                   "example": "any"
                 },
-                "userId": {
+                "vlogId": {
                   "example": "any"
                 }
               }
@@ -1465,8 +1480,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
