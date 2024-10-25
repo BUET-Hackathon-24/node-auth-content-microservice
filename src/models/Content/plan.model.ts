@@ -18,13 +18,13 @@ class PlanModel extends Base {
         "INSERT INTO plan (created_by, title, data, start_date, end_date,latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
         [userId, title, data, start_date, end_date,latitude, longitude]
       );
-      let weathers = [];
-      for(let i = start_date; i <= end_date; i.setDate(i.getDate() + 1)){
-      const weather = await getWeather(latitude, longitude, start_date.toISOString());
-      weathers.push(weather);
-      }
-      const weathersJson = JSON.stringify(weathers);
-      await this.query("UPDATE plan SET weathers = $1 WHERE id = $2", [weathersJson, result[0].id]);
+      // let weathers = [];
+      // for(let i = start_date; i <= end_date; i.setDate(i.getDate() + 1)){
+      // const weather = await getWeather(latitude, longitude, start_date.toISOString());
+      // weathers.push(weather);
+      // }
+      // const weathersJson = JSON.stringify(weathers);
+      // await this.query("UPDATE plan SET weathers = $1 WHERE id = $2", [weathersJson, result[0].id]);
       return result[0];
     } catch (error: any) {
       console.error("Database error in createPlan:", error);
@@ -58,7 +58,10 @@ class PlanModel extends Base {
   async getUserPlans(userId : number){
     try {
       console.log(userId);
-      return this.query("SELECT * FROM plan WHERE created_by = $1 JOIN user ON plan.created_by = user.id order by plan.created_at desc", [userId]);
+      return this.query(
+        "SELECT * FROM plan JOIN users ON plan.created_by = users.id WHERE created_by = $1  order by plan.created_at desc",
+        [userId]
+      );
     } catch (error) {
       console.error("Database error in getUserPlans:", error);
       throw new Error("Failed to retrieve user plans");

@@ -14,7 +14,7 @@ class AuthenticationMiddleware {
       decoded = jwt.verify(
         token,
       process.env.ACCESS_TOKEN_SECRET as string,
-      );
+      ); 
        console.log("decoded: ", decoded);
     } catch (error) {
       console.log(error);
